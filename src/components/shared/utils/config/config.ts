@@ -88,7 +88,7 @@ export const getDefaultAppIdAndUrl = () => {
 };
 
 // Default app ID - always 114292
-const DEFAULT_APP_ID = 122038;
+const DEFAULT_APP_ID = 69571;
 
 /**
  * No-op function for backward compatibility - app ID no longer switches
