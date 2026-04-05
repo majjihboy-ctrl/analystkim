@@ -10,10 +10,11 @@ import {
     TicksStreamRequest,
     TradingTimesRequest,
 } from '@deriv/api-types';
-import { ChartTitle, SmartChart } from '@deriv/deriv-charts';
 import { useDevice } from '@deriv-com/ui';
 import ToolbarWidgets from './toolbar-widgets';
-import '@deriv/deriv-charts/dist/smartcharts.css';
+
+// Defer loading of heavy chart library and its CSS until the chart page mounts
+import { useCallback } from 'react';
 
 type TSubscription = {
     [key: string]: null | {
@@ -51,6 +52,19 @@ const Chart = observer(({ show_digits_stats }: { show_digits_stats: boolean }) =
     } = chart_store;
     const chartSubscriptionIdRef = useRef(chart_subscription_id);
     const { isDesktop, isMobile } = useDevice();
+    const [Charts, setCharts] = useState<any>(null);
+
+    const loadCharts = useCallback(async () => {
+        if (Charts) return;
+        try {
+            await import('@deriv/deriv-charts/dist/smartcharts.css');
+            const mod = await import('@deriv/deriv-charts');
+            setCharts(mod);
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error('Failed to load charts library', e);
+        }
+    }, [Charts]);
     const { is_drawer_open } = run_panel;
     const { is_chart_modal_visible } = dashboard;
     const settings = {
@@ -83,6 +97,10 @@ const Chart = observer(({ show_digits_stats }: { show_digits_stats: boolean }) =
     useEffect(() => {
         if (!symbol) updateSymbol();
     }, [symbol, updateSymbol]);
+
+    useEffect(() => {
+        loadCharts();
+    }, [loadCharts]);
 
     const requestAPI = (req: ServerTimeRequest | ActiveSymbolsRequest | TradingTimesRequest) => {
         return chart_api.api.send(req);
@@ -122,7 +140,8 @@ const Chart = observer(({ show_digits_stats }: { show_digits_stats: boolean }) =
             })}
             dir='ltr'
         >
-            <SmartChart
+            {Charts ? (
+                <Charts.SmartChart
                 id='dbot'
                 barriers={barriers}
                 showLastDigitStats={show_digits_stats}
@@ -147,12 +166,15 @@ const Chart = observer(({ show_digits_stats }: { show_digits_stats: boolean }) =
                 requestSubscribe={requestSubscribe}
                 settings={settings}
                 symbol={symbol}
-                topWidgets={() => <ChartTitle onChange={onSymbolChange} />}
+                topWidgets={() => <Charts.ChartTitle onChange={onSymbolChange} />}
                 isConnectionOpened={is_connection_opened}
                 getMarketsOrder={getMarketsOrder}
                 isLive
                 leftMargin={80}
-            />
+                />
+            ) : (
+                <div className='dashboard__chart-placeholder' />
+            )}
         </div>
     );
 });

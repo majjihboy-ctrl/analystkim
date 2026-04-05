@@ -7,8 +7,10 @@ import NoSearchResult from './common/no-search-result-found';
 import QuickStrategyGuides from './quick-strategy-content/quick-strategy-guides';
 import FAQContent from './faq-content';
 import GuideContent from './guide-content';
-import TutorialsTabDesktop from './tutorials-tab-desktop';
-import TutorialsTabMobile from './tutorials-tab-mobile';
+import React, { lazy, Suspense } from 'react';
+
+const TutorialsTabDesktop = lazy(() => import('./tutorials-tab-desktop'));
+const TutorialsTabMobile = lazy(() => import('./tutorials-tab-mobile'));
 
 type TTutorialsTab = {
     handleTabChange: (active_number: number) => void;
@@ -83,9 +85,13 @@ const TutorialsTab = observer(({ handleTabChange }: TTutorialsTab) => {
     ];
 
     return isDesktop ? (
-        <TutorialsTabDesktop tutorial_tabs={tutorial_tabs} prev_active_tutorials={prev_active_tutorials} />
+        <Suspense fallback={<div />}>
+            <TutorialsTabDesktop tutorial_tabs={tutorial_tabs} prev_active_tutorials={prev_active_tutorials} />
+        </Suspense>
     ) : (
-        <TutorialsTabMobile tutorial_tabs={tutorial_tabs} prev_active_tutorials={prev_active_tutorials} />
+        <Suspense fallback={<div />}>
+            <TutorialsTabMobile tutorial_tabs={tutorial_tabs} prev_active_tutorials={prev_active_tutorials} />
+        </Suspense>
     );
 });
 

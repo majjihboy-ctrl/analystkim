@@ -3,6 +3,11 @@
     display: flex;
     align-items: center;
     height: 40px;
+    position: fixed;
+    right: 1.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20000;
 
     .animation__run-button {
         height: 40px;
@@ -112,7 +117,7 @@
 }
 
 // Mobile-specific adjustments
-@media screen and (width <= 1300px) {
+@media screen and (max-width: 1300px) {
     .run__button_wrapper .qs__tooltip.dc-tooltip {
         position: relative;
 
@@ -163,6 +168,16 @@
                 z-index: 3 !important;
             }
         }
+    }
+
+    // Mobile: place run button above footer and not centered vertically
+    .run__button_wrapper {
+        position: fixed !important;
+        right: 1.2rem !important;
+        bottom: 5.6rem !important; // above footer height
+        top: auto !important;
+        transform: none !important;
+        z-index: 20000 !important;
     }
 }
 

@@ -6,6 +6,10 @@
     border-bottom: 1px solid #e0e0e0; // Light grey border
     margin: 0 !important;
     padding: 0 !important;
+    position: sticky;
+    top: 0;
+    z-index: 20000;
+    overflow: visible;
 
     @include mobile-or-tablet-screen {
         // Ensure header content has proper spacing on mobile
@@ -162,6 +166,9 @@
                 }
             }
         }
+        // Ensure the powered-by block remains visible above page content
+        z-index: 20001;
+        pointer-events: auto;
     }
 
     &__icons {

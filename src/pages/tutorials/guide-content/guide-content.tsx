@@ -77,6 +77,12 @@ const GuideContent = ({ guide_tab_content, video_tab_content, is_dialog_open }: 
                             </div>
                             <div className='tutorials-wrap__group__guides'>
                                 {guide_tab_content?.map(({ id, content, src, subtype }) => {
+                                    const hasSrc = !!src;
+                                    const webpSrc = hasSrc ? src.replace(/\.(png|jpe?g)$/i, '.webp') : src;
+                                    const imageSet = hasSrc
+                                        ? `image-set(url('${webpSrc}') type('image/webp') 1x, url('${src}') 1x)`
+                                        : undefined;
+
                                     return (
                                         <div className='tutorials-wrap__group__cards' key={id}>
                                             <div
@@ -89,7 +95,7 @@ const GuideContent = ({ guide_tab_content, video_tab_content, is_dialog_open }: 
                                                         'tutorials-wrap__placeholder--disabled': !src,
                                                     })}
                                                     style={{
-                                                        backgroundImage: `url(${src})`,
+                                                        backgroundImage: imageSet || (src ? `url(${src})` : undefined),
                                                     }}
                                                 />
                                             </div>
@@ -124,6 +130,12 @@ const GuideContent = ({ guide_tab_content, video_tab_content, is_dialog_open }: 
 
                             <div className='tutorials-wrap__group__guides'>
                                 {video_tab_content?.map(({ content, src, url, id }) => {
+                                    const hasSrc = !!src;
+                                    const webpSrc = hasSrc ? src.replace(/\.(png|jpe?g)$/i, '.webp') : src;
+                                    const imageSet = hasSrc
+                                        ? `image-set(url('${webpSrc}') type('image/webp') 1x, url('${src}') 1x)`
+                                        : undefined;
+
                                     return (
                                         <div className='tutorials-wrap__group__cards' key={id}>
                                             <div
@@ -131,7 +143,7 @@ const GuideContent = ({ guide_tab_content, video_tab_content, is_dialog_open }: 
                                                     'tutorials-wrap__placeholder--disabled': !url,
                                                 })}
                                                 style={{
-                                                    backgroundImage: `url(${src})`,
+                                                    backgroundImage: imageSet || (src ? `url(${src})` : undefined),
                                                 }}
                                             >
                                                 <div className='tutorials-wrap__placeholder__button-group'>

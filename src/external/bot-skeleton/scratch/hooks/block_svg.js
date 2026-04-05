@@ -51,7 +51,7 @@ window.Blockly.BlockSvg.prototype.setDisabled = function (disabled) {
 window.Blockly.BlockSvg.prototype.setErrorHighlighted = function (
     should_be_error_highlighted,
     error_message = localize(
-        'The block(s) highlighted in red are missing input values. Please update them and click "Run bot".'
+        'The block(s) highlighted in red are missing input values. Please update them and click "Submit".'
     )
 ) {
     if (this.is_error_highlighted === should_be_error_highlighted) {
