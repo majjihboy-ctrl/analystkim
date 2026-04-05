@@ -71,9 +71,18 @@ export default class TradingTimes {
 
     async updateTradingTimes() {
         const last_update_date = this.last_update_moment.format('YYYY-MM-DD');
-        const response = await this.ws?.send({ trading_times: last_update_date });
+        let response;
+        try {
+            response = await this.ws?.send({ trading_times: last_update_date });
+        } catch (err) {
+            // Avoid uncaught promise rejections from underlying ws send
+            // and fail gracefully — keep existing trading_times if available.
+            // eslint-disable-next-line no-console
+            console.error('TradingTimes.updateTradingTimes ws.send failed:', err);
+            return;
+        }
 
-        if (response.error) {
+        if (!response || response.error) {
             return;
         }
 
