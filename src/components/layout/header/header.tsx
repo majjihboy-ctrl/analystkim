@@ -267,6 +267,9 @@ const AppHeader = observer(({ isAuthenticating }: TAppHeaderProps) => {
         is_tmb_enabled,
     ]);
 
+    // Log header visibility decision for debugging deployed layout mismatches
+    // eslint-disable-next-line no-console
+    console.info('[AppHeader] should_hide_header:', client?.should_hide_header, 'website_status:', client?.website_status);
     if (client?.should_hide_header) return null;
 
     return (

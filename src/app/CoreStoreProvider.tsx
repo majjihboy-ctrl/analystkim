@@ -149,6 +149,11 @@ const CoreStoreProvider: React.FC<{ children: React.ReactNode }> = observer(({ c
 
             api_base.api?.websiteStatus().then((res: TSocketResponseData<'website_status'>) => {
                 client.setWebsiteStatus(res.website_status);
+                // Debug: log website status received from API on initialization
+                // This helps diagnose runtime layout toggles (header/footer visibility)
+                // Remove these logs after investigation
+                // eslint-disable-next-line no-console
+                console.info('[CoreStoreProvider] website_status:', res.website_status);
             });
 
             // Update server time every 10 seconds
