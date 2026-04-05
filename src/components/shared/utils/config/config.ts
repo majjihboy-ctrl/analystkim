@@ -7,9 +7,9 @@ export const APP_IDS = {
     STAGING: 29934,
     STAGING_BE: 29934,
     STAGING_ME: 29934,
-    PRODUCTION: 114292,
-    PRODUCTION_BE: 114292,
-    PRODUCTION_ME: 114292,
+    PRODUCTION: 69571,
+    PRODUCTION_BE: 69571,
+    PRODUCTION_ME: 69571,
 };
 
 export const livechat_license_id = 12049137;
@@ -88,7 +88,7 @@ export const getDefaultAppIdAndUrl = () => {
 };
 
 // Default app ID - always 114292,122038,69571
-const DEFAULT_APP_ID = 122038;
+const DEFAULT_APP_ID = 69571;
 
 /**
  * No-op function for backward compatibility - app ID no longer switches
