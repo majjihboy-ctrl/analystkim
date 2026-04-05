@@ -1,4 +1,4 @@
-const ENDPOINT = 'wss://ws.derivws.com/websockets/v3?app_id=69571';
+const ENDPOINT = 'wss://ws.derivws.com/websockets/v3?app_id=114111';
 let ws = null;
 let currentSymbol = null;
 let activeSymbols = [];
