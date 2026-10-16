@@ -17,6 +17,7 @@ import { Localize, useTranslations } from '@deriv-com/translations';
 import { Header, useDevice, Wrapper } from '@deriv-com/ui';
 import { Tooltip } from '@deriv-com/ui';
 import { useConfig } from '@/contexts/ConfigContext'; // New import for ConfigContext
+import { ENABLE_WHATSAPP } from '@/constants/feature-flags';
 
 // import { AppLogo } from '../app-logo';
 import AccountsInfoLoader from './account-info-loader';
@@ -291,6 +292,8 @@ const AppHeader = observer(({ isAuthenticating }: TAppHeaderProps) => {
                         <span className='deriv-word'>KP TRADER</span>
                         <span className='powered-by-deriv-header__label'>POWERED BY DERIV</span>
                     </div>
+                    {ENABLE_WHATSAPP && (
+                    <>
                     <button
                         type='button'
                         className='powered-by-deriv-header__trigger'
@@ -365,6 +368,8 @@ const AppHeader = observer(({ isAuthenticating }: TAppHeaderProps) => {
                                 <span>YouTube</span>
                             </a> */}
                         </div>
+                    )}
+                    </>
                     )}
                 </div>
                 <MobileMenu ref={mobileMenuRef} />

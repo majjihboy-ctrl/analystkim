@@ -7,6 +7,7 @@ import Dialog from '@/components/shared_ui/dialog';
 import MobileFullPageModal from '@/components/shared_ui/mobile-full-page-modal';
 import Text from '@/components/shared_ui/text';
 import { DBOT_TABS } from '@/constants/bot-contents';
+import { ENABLE_GOOGLE_DRIVE } from '@/constants/feature-flags';
 import { useStore } from '@/hooks/useStore';
 import {
     DerivLightBotBuilderIcon,
@@ -112,6 +113,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
             },
         },
     ];
+    const visible_actions = actions.filter(action => ENABLE_GOOGLE_DRIVE || action.id !== 'google-drive');
 
     return React.useMemo(
         () => (
@@ -126,7 +128,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                     })}
                     id='tab__dashboard__table__tiles'
                 >
-                    {actions.map(icons => {
+                    {visible_actions.map(icons => {
                         const { icon, content, callback, id } = icons;
                         return (
                             <div
@@ -157,7 +159,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                     })}
 
                     {!isDesktop ? (
-                        <Dialog
+                        ENABLE_GOOGLE_DRIVE ? <Dialog
                             title={dialog_options.title}
                             is_visible={is_dialog_open}
                             onCancel={onCloseDialog}
@@ -166,9 +168,9 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                             has_close_icon
                         >
                             <GoogleDrive />
-                        </Dialog>
+                        </Dialog> : null
                     ) : (
-                        <MobileFullPageModal
+                        ENABLE_GOOGLE_DRIVE ? <MobileFullPageModal
                             is_modal_open={is_dialog_open}
                             className='load-strategy__wrapper'
                             header={localize('Load strategy')}
@@ -182,7 +184,7 @@ const Cards = observer(({ is_mobile, has_dashboard_strategies }: TCardProps) => 
                             <div label='Google Drive' className='google-drive-label'>
                                 <GoogleDrive />
                             </div>
-                        </MobileFullPageModal>
+                        </MobileFullPageModal> : null
                     )}
                 </div>
                 <DashboardBotList />

@@ -1,6 +1,27 @@
 import React from 'react';
-import ReactDomServer from 'react-dom/server';
 import { localize } from '@deriv-com/translations';
+
+const escapeXml = (value: string) =>
+    value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+const renderToolboxMarkup = (node: React.ReactNode): string => {
+    if (node === null || node === undefined || typeof node === 'boolean') return '';
+    if (typeof node === 'string' || typeof node === 'number') return escapeXml(String(node));
+    if (Array.isArray(node)) return node.map(renderToolboxMarkup).join('');
+
+    const element = node as React.ReactElement;
+    if (typeof element.type === 'function') {
+        return renderToolboxMarkup(element.type(element.props));
+    }
+
+    const props = element.props as Record<string, unknown>;
+    const attributes = Object.entries(props)
+        .filter(([name, value]) => name !== 'children' && value !== undefined && value !== null && value !== false)
+        .map(([name, value]) => ` ${name === 'className' ? 'class' : name}="${escapeXml(String(value))}"`)
+        .join('');
+    const children = renderToolboxMarkup(props.children as React.ReactNode);
+    return `<${String(element.type)}${attributes}>${children}</${String(element.type)}>`;
+};
 
 const Arg = ({ ...props }) => {
     return React.createElement('arg', props);
@@ -51,7 +72,7 @@ const Xml = ({ ...props }) => {
 };
 
 export const ToolboxItems = () =>
-    ReactDomServer.renderToStaticMarkup(
+    renderToolboxMarkup(
         <Xml xmlns='http://www.w3.org/1999/xhtml' id='toolbox'>
             <Category id='analysis_logics' name={localize('Analysis Logics 🔥')}>
                 <Block type='last_digits_condition' />

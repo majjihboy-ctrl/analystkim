@@ -1,6 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { tabs_title } from '@/constants/load-modal';
+import { ENABLE_GOOGLE_DRIVE } from '@/constants/feature-flags';
 import { useStore } from '@/hooks/useStore';
 import { localize } from '@deriv-com/translations';
 import { useDevice } from '@deriv-com/ui';
@@ -60,9 +61,11 @@ const LoadModal: React.FC = observer(() => {
                     <div label={localize('Local')}>
                         <Local />
                     </div>
-                    <div label='Google Drive'>
-                        <GoogleDrive />
-                    </div>
+                    {ENABLE_GOOGLE_DRIVE && (
+                        <div label='Google Drive'>
+                            <GoogleDrive />
+                        </div>
+                    )}
                 </Tabs>
             </MobileFullPageModal>
         );
@@ -96,9 +99,11 @@ const LoadModal: React.FC = observer(() => {
                     <div label={localize('Local')}>
                         <Local />
                     </div>
-                    <div label='Google Drive'>
-                        <GoogleDrive />
-                    </div>
+                    {ENABLE_GOOGLE_DRIVE && (
+                        <div label='Google Drive'>
+                            <GoogleDrive />
+                        </div>
+                    )}
                 </Tabs>
             </Modal.Body>
             {has_recent_strategies && (

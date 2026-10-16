@@ -10,6 +10,7 @@ import RadioGroup from '@/components/shared_ui/radio-group';
 import Text from '@/components/shared_ui/text';
 import ThemedScrollbars from '@/components/shared_ui/themed-scrollbars';
 import { DBOT_TABS } from '@/constants/bot-contents';
+import { ENABLE_GOOGLE_DRIVE } from '@/constants/feature-flags';
 import { config, save_types } from '@/external/bot-skeleton';
 import { useStore } from '@/hooks/useStore';
 import {
@@ -115,7 +116,7 @@ const SaveModalForm: React.FC<TSaveModalForm> = ({
                                         }
                                         value={save_types.LOCAL}
                                     />
-                                    <RadioGroup.Item
+                                    {ENABLE_GOOGLE_DRIVE && <RadioGroup.Item
                                         id='drive'
                                         label={
                                             <IconRadio
@@ -130,7 +131,7 @@ const SaveModalForm: React.FC<TSaveModalForm> = ({
                                         className={classNames({
                                             'dc-radio-group__item-disabled': !is_authorised,
                                         })}
-                                    />
+                                    />}
                                 </RadioGroup>
                             </div>
                         </div>

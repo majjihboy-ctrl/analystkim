@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { ENABLE_WHATSAPP } from '@/constants/feature-flags';
 import { useConfig } from '@/contexts/ConfigContext'; // New import
 import './community-modal.scss';
 
@@ -113,16 +114,18 @@ const CommunityModal: React.FC = () => {
                     </div>
 
                     <div className='community-modal__actions'>
+                        {ENABLE_WHATSAPP && (
+                            <a
+                                href={config?.channels?.whatsapp ? `https://wa.me/${config.channels.whatsapp}?text=Hello%20Analyst%20Kim` : '#'}
+                                target='_blank'
+                                rel='noopener noreferrer'
+                                className='community-modal__button community-modal__button--whatsapp'
+                            >
+                                Join WhatsApp Group
+                            </a>
+                        )}
                         <a
-                            href={config.channels.whatsapp ? `https://wa.me/${config.channels.whatsapp}?text=Hello%20Analyst%20Kim` : '#'}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            className='community-modal__button community-modal__button--whatsapp'
-                        >
-                            Join WhatsApp Group
-                        </a>
-                        <a
-                            href={config.channels.telegram ? `https://t.me/${config.channels.telegram.replace('@', '')}` : '#'}
+                            href={config?.channels?.telegram ? `https://t.me/${config.channels.telegram.replace('@', '')}` : '#'}
                             target='_blank'
                             rel='noopener noreferrer'
                             className='community-modal__button community-modal__button--telegram'
@@ -134,7 +137,7 @@ const CommunityModal: React.FC = () => {
                     <div className='community-modal__info'>
                         <p>Get access to strategies, bots and guides sent earlier on our channel</p>
                         <a
-                            href={config.channels.telegram ? `https://t.me/${config.channels.telegram.replace('@', '')}` : '#'}
+                            href={config?.channels?.telegram ? `https://t.me/${config.channels.telegram.replace('@', '')}` : '#'}
                             target='_blank'
                             rel='noopener noreferrer'
                             className='community-modal__link'

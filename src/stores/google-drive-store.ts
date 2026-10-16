@@ -9,6 +9,7 @@ import {
     rudderStackSendUploadStrategyFailedEvent,
 } from '../analytics/rudderstack-common-events';
 import { getStrategyType } from '../analytics/utils';
+import { ENABLE_GOOGLE_DRIVE } from '@/constants/feature-flags';
 import RootStore from './root-store';
 
 export type TErrorWithStatus = Error & { status?: number; result?: { error: { message: string } } };
@@ -64,10 +65,12 @@ export default class GoogleDriveStore {
         this.setKey();
         this.client = null;
         this.access_token = localStorage.getItem('google_access_token') ?? '';
-        setTimeout(() => {
-            importExternal('https://accounts.google.com/gsi/client').then(() => this.initialiseClient());
-            importExternal('https://apis.google.com/js/api.js').then(() => this.initialise());
-        }, 3000);
+        if (ENABLE_GOOGLE_DRIVE) {
+            setTimeout(() => {
+                importExternal('https://accounts.google.com/gsi/client').then(() => this.initialiseClient());
+                importExternal('https://apis.google.com/js/api.js').then(() => this.initialise());
+            }, 3000);
+        }
     }
 
     is_google_drive_token_valid = true;

@@ -1,5 +1,6 @@
 import useRemoteConfig from '@/hooks/growthbook/useRemoteConfig';
 import useModalManager from '@/hooks/useModalManager';
+import { ENABLE_WHATSAPP } from '@/constants/feature-flags';
 import { getActiveTabUrl } from '@/utils/getActiveTabUrl';
 import { LANGUAGES } from '@/utils/languages';
 import { useTranslations } from '@deriv-com/translations';
@@ -38,7 +39,7 @@ const Footer = () => {
             <ResponsibleTrading />
             <Deriv />
             <Livechat />
-            {cs_chat_whatsapp && <WhatsApp />}
+            {ENABLE_WHATSAPP && cs_chat_whatsapp && <WhatsApp />}
             <div className='app-footer__vertical-line' />
             <ServerTime />
             <div className='app-footer__vertical-line' />

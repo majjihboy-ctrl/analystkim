@@ -54,9 +54,9 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
             if (data) {
                 setConfig(prevConfig => ({
                     ...prevConfig,
-                    channels: data.channels,
-                    appName: data.app_name,
-                    supportEmail: data.support_email,
+                    channels: data.channels ?? defaultConfig.channels,
+                    appName: data.app_name ?? defaultConfig.appName,
+                    supportEmail: data.support_email ?? defaultConfig.supportEmail,
                 }));
             } else {
                 console.error('Failed to load app config from Supabase.');
