@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import { getAllBots, getAppConfig, SupabaseAppConfig } from '@/services/adminSupabase'; // Import service and getAllBots
-import { supabase } from '@/utils/supabaseClient'; // Import supabase client
+import { fetchLocalBots } from '@/utils/local-bots';
+import { isSupabaseConfigured, supabase } from '@/utils/supabaseClient'; // Import supabase client
 
 export interface Bot {
     id: string;
@@ -49,6 +50,7 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
     // Function to refresh only the app config (channels, appName, supportEmail)
     const refreshAppConfig = useCallback(async () => {
+        if (!isSupabaseConfigured) return; // Local mode: keep default config
         try {
             const data = await getAppConfig();
             if (data) {
@@ -80,32 +82,26 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
     // Function to refresh only the bots list
     const refreshBots = useCallback(async () => {
-        try {
-            const botsData = await getAllBots();
-            if (botsData) {
-                setConfig(prevConfig => ({
-                    ...prevConfig,
-                    bots: botsData, // Update the bots array in config
-                }));
-            } else {
-                console.error('Failed to load bots from Supabase.');
-                setConfig(prevConfig => ({
-                    ...prevConfig,
-                    bots: [],
-                }));
+        let botsData: Bot[] = [];
+        if (isSupabaseConfigured) {
+            try {
+                botsData = ((await getAllBots()) as unknown as Bot[]) || [];
+            } catch (error) {
+                console.error('Failed to load bots from Supabase:', error);
             }
-        } catch (error) {
-            console.error('Failed to load bots from Supabase:', error);
-            setConfig(prevConfig => ({
-                ...prevConfig,
-                bots: [],
-            }));
         }
+        // Local fallback: use the bundled XML files when Supabase is off, unreachable or empty
+        if (botsData.length === 0) {
+            botsData = await fetchLocalBots();
+        }
+        setConfig(prevConfig => ({ ...prevConfig, bots: botsData }));
     }, []);
 
     useEffect(() => {
         // Initial fetches
         Promise.all([refreshAppConfig(), refreshBots()]).finally(() => setLoading(false));
+
+        if (!isSupabaseConfigured) return undefined; // No realtime subscriptions in local mode
 
         // Real-time subscription for app_config changes
         const appConfigSubscription = supabase

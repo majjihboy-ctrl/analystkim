@@ -1,0 +1,130 @@
+[
+  {
+    "id": "local-1",
+    "name": "16. Double Differs Exclude Red and Green",
+    "file": "local:16. Double Differs Exclude Red and Green.xml",
+    "description": "Free trading bot: 16. Double Differs Exclude Red and Green",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-2",
+    "name": "2 Prediction O&U M7 Bot",
+    "file": "local:2 Prediction O&U M7 Bot..xml",
+    "description": "Free trading bot: 2 Prediction O&U M7 Bot",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-3",
+    "name": "AK Entry Point Software 003",
+    "file": "local:AK Entry Point Software 003.xml",
+    "description": "Free trading bot: AK Entry Point Software 003",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-4",
+    "name": "Alpha System 001",
+    "file": "local:Alpha System 001.xml",
+    "description": "Free trading bot: Alpha System 001",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-5",
+    "name": "Digit Flux by Kim",
+    "file": "local:Digit Flux by Kim (1).xml",
+    "description": "Free trading bot: Digit Flux by Kim",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-6",
+    "name": "Dollar Guard S1",
+    "file": "local:Dollar Guard S1.xml",
+    "description": "Free trading bot: Dollar Guard S1",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-7",
+    "name": "Genesis Version 1 by Kim",
+    "file": "local:Genesis Version 1 by Kim.xml",
+    "description": "Free trading bot: Genesis Version 1 by Kim",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-8",
+    "name": "MILLERN EVEN ODD",
+    "file": "local:MILLERN EVEN ODD.xml",
+    "description": "Free trading bot: MILLERN EVEN ODD",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-9",
+    "name": "Millern SV7",
+    "file": "local:Millern SV7.xml",
+    "description": "Free trading bot: Millern SV7",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-10",
+    "name": "Millern V2",
+    "file": "local:Millern V2.xml",
+    "description": "Free trading bot: Millern V2",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-11",
+    "name": "Money Gram V1 AUTO",
+    "file": "local:Money Gram V1 AUTO..xml",
+    "description": "Free trading bot: Money Gram V1 AUTO",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-12",
+    "name": "OVER1 BOT WITH OVER3 REVOVERY",
+    "file": "local:OVER1 BOT WITH OVER3 REVOVERY  (1).xml",
+    "description": "Free trading bot: OVER1 BOT WITH OVER3 REVOVERY",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-13",
+    "name": "Pesa Flip G1",
+    "file": "local:Pesa Flip G1.xml",
+    "description": "Free trading bot: Pesa Flip G1",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-14",
+    "name": "Pesa Flow S3",
+    "file": "local:Pesa Flow S3.xml",
+    "description": "Free trading bot: Pesa Flow S3",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-15",
+    "name": "Xenon RV1",
+    "file": "local:Xenon RV1.xml",
+    "description": "Free trading bot: Xenon RV1",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  },
+  {
+    "id": "local-16",
+    "name": "even odd",
+    "file": "local:even odd.xml",
+    "description": "Free trading bot: even odd",
+    "difficulty": "Intermediate",
+    "strategy": "Multi-Strategy"
+  }
+]

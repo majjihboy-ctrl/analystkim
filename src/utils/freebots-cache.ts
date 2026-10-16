@@ -1,6 +1,7 @@
 import localforage from 'localforage';
 import LZString from 'lz-string';
 import { getAllBots, getBotXmlPublicUrl } from '@/services/adminSupabase'; // Import from service
+import { getLocalBotUrl, isLocalBotFile } from '@/utils/local-bots';
 
 export type TBotsManifestItem = {
     id: string; // Add id
@@ -58,7 +59,7 @@ export const fetchXmlWithCache = async (file: string): Promise<string | null> =>
     }
 
     try {
-        const publicUrl = getBotXmlPublicUrl(file);
+        const publicUrl = isLocalBotFile(file) ? getLocalBotUrl(file) : getBotXmlPublicUrl(file);
         if (!publicUrl) {
             console.warn(`freebots-cache: No public URL found for bot XML: ${file}`);
             return null;
