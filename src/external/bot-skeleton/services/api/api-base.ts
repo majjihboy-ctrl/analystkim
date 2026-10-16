@@ -332,6 +332,7 @@ class APIBase {
                 } else {
                     console.error('Authorization error:', error);
                 }
+                this.ensureActiveSymbols();
                 return error;
             }
 
@@ -356,6 +357,7 @@ class APIBase {
             clearAuthData();
             setIsAuthorized(false);
             globalObserver.emit('Error', e);
+            this.ensureActiveSymbols();
         } finally {
             setIsAuthorizing(false);
         }
@@ -390,6 +392,17 @@ class APIBase {
 
         await Promise.all(streamsToSubscribe.map(subscribeToStream));
     }
+
+    /**
+     * Markets are only requested at init time for logged-out users. If a saved token turns out to be
+     * invalid/expired, authorization fails and nothing else requests them, which leaves Charts and
+     * Bot Builder with an empty market list. The active_symbols call does not need authorization,
+     * so request it here as a fallback.
+     */
+    ensureActiveSymbols = () => {
+        if (this.has_active_symbols || this.active_symbols_promise) return;
+        this.active_symbols_promise = this.getActiveSymbols();
+    };
 
     getActiveSymbols = async () => {
         await doUntilDone(() => this.api?.send({ active_symbols: 'brief' }), [], this).then(
