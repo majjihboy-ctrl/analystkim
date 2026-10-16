@@ -159,9 +159,15 @@ const AppContent = observer(() => {
 
         const retrieveActiveSymbols = () => {
             const { active_symbols } = ApiHelpers.instance;
-            active_symbols.retrieveActiveSymbols(true).then(() => {
-                setIsLoading(false);
-            });
+            active_symbols
+                .retrieveActiveSymbols(true)
+                .catch(error => {
+                    // eslint-disable-next-line no-console
+                    console.error('Failed to load active symbols:', error);
+                })
+                .finally(() => {
+                    setIsLoading(false);
+                });
         };
 
         if (ApiHelpers?.instance?.active_symbols) {
@@ -169,10 +175,16 @@ const AppContent = observer(() => {
         } else {
             // This is a workaround to fix the issue where the active symbols are not loaded immediately
             // when the API is initialized. Should be replaced with RxJS pubsub
+            let attempts = 0;
             const intervalId = setInterval(() => {
+                attempts += 1;
                 if (ApiHelpers?.instance?.active_symbols) {
                     clearInterval(intervalId);
                     retrieveActiveSymbols();
+                } else if (attempts >= 10) {
+                    // Give up waiting so the app never sits on the loader forever
+                    clearInterval(intervalId);
+                    setIsLoading(false);
                 }
             }, 1000);
         }
@@ -203,6 +215,18 @@ const AppContent = observer(() => {
             initHotjar(client);
         }
     }, []);
+
+    // Safety valve: if the socket never opens or symbols never load, stop showing
+    // the loader after 12s so the tabs/UI still render instead of an empty page.
+    React.useEffect(() => {
+        if (!is_loading) return undefined;
+        const timeout_id = setTimeout(() => {
+            // eslint-disable-next-line no-console
+            console.warn('Startup took too long - showing the app without waiting any longer.');
+            setIsLoading(false);
+        }, 12000);
+        return () => clearTimeout(timeout_id);
+    }, [is_loading]);
 
     if (common?.error) return null;
 
